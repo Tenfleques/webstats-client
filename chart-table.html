@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Tendai Chikake">
+
+    <link rel="shortcut icon" href="img/favicon.png">
+	<link rel="favicon" href="img/favicon.png">
+    <title>Телеметрикс</title>
+    <!--[if lte IE 8]>
+        <script src="js/excanvas.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/flat-blue.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-year-calendar.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="css/morris.css">
+	<script src="libs/modernizr-2.6.2.js"></script>
+  <link rel="stylesheet" href="app/style.css">
+  </head>
+  <body class="flat-blue">
+
+
+<div class="modal fade errorBox" id="errorBox" tabindex="-1" role="dialog" aria-labelledby="errorBox" aria-hidden="true">
+    <div class="modal-dialog">
+		<div class="modal-content card">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="errorBox-header"></h4>
+				</div>
+				<div class="modal-body" id="errorBox-body">
+
+				</div>
+			<div class="modal-footer">
+		<div class="col-sm-12">
+        <button type="button" id="close-btn-var-color" class="btn btn-primary btn-danger" data-dismiss="modal" aria-label="Close">Закрыть</button>
+        </div>
+      </div>
+     </div>
+  </div>
+</div>
+
+<div class="modal fade width-settings" id="width-settings" tabindex="-1" role="dialog" aria-labelledby="width-settings" aria-hidden="true">
+    <div class="modal-dialog">
+		<div class="card modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="width-settings-header"></h4>
+				</div>
+				<div class="card-body">
+          <form class="form-horizontal col-lg-12 no-margin no-padding" id="width-settings-form" method="post">
+            <div class="form-group">
+              <div class="col-sm-12" id="error-width-settings">
+              </div>
+            </div>
+          <div class="row">
+            <input type="hidden" name="TOKEN" id ="sve_token" value="">
+            <div class='col-sm-12' id = "width-settings-form-elements">
+            </div>
+        	 </div>
+           <div class="col-md-12">
+             <div class="form-group col-sm-6 pull-left">
+                <div class="col-sm-12">
+                  <button class="btn btn-primary col-lg-12 pull-left" id="width-settings-new-range">новый диапазон времени</button>
+                </div>
+              </div>
+              <div class="form-group col-sm-6 pull-right">
+                <div class="col-sm-12">
+                    <button type ="submit" class="btn btn-primary pull-right">сохранять</button>
+               	</div>
+              </div>
+	          </div>
+            <div class="col-lg-12 extra">
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h4 class="modal-title" id="login-modalLabel">Вход</h4>
+          </div>
+          <div class="modal-body">
+            <div class="card-body ">
+                <form class="form-horizontal login" method="POST">
+                <div class="form-group">
+                      <div class="col-sm-12" id="error-login">
+                      </div>
+                   </div>
+
+                    <div class="form-group">
+                        <label for="email" class="col-sm-12 pull-left">Электронная почта</label>
+                        <div class="col-sm-12">
+                            <input class="form-control" id="email" name="email" placeholder="эл. почта" type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-12 pull-left">пароль</label>
+                        <div class="col-sm-12">
+                            <input class="form-control" id="password" placeholder="пароль" name="password" type="password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-default pull-left">Ввести</button>
+                        </div>
+                    </div>
+                </form>
+            	</div>
+          </div>
+          <div class="modal-footer">
+            Войдите, что бы продолжить работу или <a id="signup"> зарегистрируйтесь</a>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="loading-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color:transparent; border-color:transparent">
+    	<img src="img/loading.gif" class="img-responsive" style="display: block;
+    margin-left: auto;
+    margin-right: auto; padding-top:40%;"/>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="md-save-table-view" tabindex="-1" role="dialog" aria-labelledby="md-save-table-view" aria-hidden="true">
+    <div class="modal-dialog">
+		<div class="modal-content card">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+				<form class="form-horizontal" id= "form-save-table-view" method="POST">
+                      <div class="form-group">
+                        <label for="email" class="col-sm-12 pull-left">название</label>
+                        <div class="col-sm-12">
+                            <input class="form-control" id="view_name" name="view_name" placeholder="название" type="text" required="true" oninvalid="this.setCustomValidity('Требуемое значение')">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-default pull-left">сохранять</button>
+                        </div>
+                    </div>
+                </form>
+				</div>
+
+     </div>
+  </div>
+</div>
+
+ <div class="app-container">
+         <div class="row content-container">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-top">
+                 <div class="container-fluid" id="window-app-titlebar">
+                     <div class="navbar-header">
+                         <button type="button" class="navbar-expand-toggle">
+                             <i class="fa fa-bars icon"></i>
+                         </button>
+
+                         <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
+                             <i class="fa fa-th icon"></i>
+                         </button>
+                     </div>
+
+                     <div class="window-action-buttons">
+                       <div class="window-action-minimize">
+                         <a class="window-action-minimizebutton" id="window-action-minimizebutton">&ndash;</a>
+                       </div>
+
+                       <div class="window-action-zoom">
+                         <a class="window-action-zoombutton" id="window-action-zoombutton">+</a>
+                       </div>
+
+                       <div class="window-action-close">
+                         <a class="window-action-closebutton" id="window-action-closebutton">x</a>
+                       </div>
+                     </div>
+                     <ul class="nav navbar-nav navbar-left">
+                       <li class="dropdown profile" style="padding-top:15px">
+                            <em class="input-append date form_datetime input-daterange" id="datepicker">
+                                <input type="text" class="amount dragless" id="start_date" name="start_date" placeholder="началная дата" readonly/>
+                                <input type="text" class="amount dragless" id= "end_date" name="end_date" placeholder="конечная дата" readonly />
+                            </em>
+                        </li>
+                        <li class="dropdown profile">
+                          <a class="dropdown-toggle dragless" id ="refresh-times" name = "" role="button">Применить время</a>
+                        </li>
+                     </ul>
+                     <ul class="nav navbar-nav navbar-right">
+                         <li class="dropdown profile no-padding no-margin window-action-profile">
+                            <a href="#" class="dropdown-toggle no-padding no-margin" style="height:44px;" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+                  </a>
+                             <ul class="dropdown-menu animated fadeInDown profile-update blueish-border " ></ul>
+                         </li>
+                     </ul>
+                 </div>
+             </nav>
+           <div class="side-menu sidebar-inverse">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="side-menu-container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand">
+                                <div><img src="img/logo.gif" class="" alt="" width="60" height="60">
+                           <div class="title color-black compTitle" style="padding-left:8px;">Телеметрикс</div> </div>
+
+                            </a>
+                            <button type="button" class="navbar-expand-toggle pull-right visible-xs">
+                                <i class="fa fa-times icon"></i>
+                            </button>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li class="nav-ctrl">
+                                <a href="index.html">
+                                    <span class="icon fa fa-home"></span><span class="title">Главная</span>
+                                </a>
+                            </li>
+                           <li class="nav-ctrl">
+                                <a href="insert-devices.html" role="button">
+                                    <span class="icon fa fa-pencil"></span><span class="title">регистрация приборов</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-ctrl">
+                                <a href="groups.html" role="button">
+                                    <span class="icon fa fa-cog"></span><span class="title">настройки группы</span>
+                                </a>
+                            </li>
+                         </ul>
+                    </div>
+
+                </nav>
+            </div>
+          </div>
+
+        <!-- Main Content -->
+          <div class="container-fluid" style="margin-bottom: 120px;">
+              <div class="side-body padding-top main-view">
+                <div id="min-max-calendar" class="calendar">
+
+                </div>
+
+
+               <div class="col-sm-12 view-table overlay hidden"> <!--hidden">-->
+                    <div class="card no-padding">
+                      <div id="toolbar">
+                        <select class="borderless">
+                          <option value="">экспортироуйте видно</option>
+                          <option value="all">экспортируйте все</option>
+                        </select>
+                        </div>
+
+                        <table id="table" >
+                        </table>
+                        <div id="tableview">
+                        <select class="borderless" id="choose-table-view">
+                         </select>
+                        </div>
+
+                     </div>
+               </div>
+               <div class="col-xs-12 blueish-border" style = "margin-top:20px">
+               	  <div class="card col-xs-12">
+                  	<div class="card-header">
+                    	<h4>
+                        	<select class="borderless" id="select-view-chart-quantity">
+                          		<option value="timeEfficiency">эффективность по времени %</option>
+                          		<option value="workEfficiency">эффективность по работе %</option>
+                                <option value="workTotalArea">обработанная площадь га</option>
+                                <option value="fillingCount">число заправок</option>
+                        	</select>
+                        </h4>
+                    </div>
+                  	<div class="card-body">
+                  		<div class="col-xs-12" style = "height:450px;" id="chart-main">
+    	          		</div>
+                     </div>
+                  </div>
+                </div>
+             </div>
+
+
+<!--
+<ul id="contextMenu" class="dropdown-menu" role="menu" style="display:none" >
+    <li><a tabindex="-1" class="menu-items-context-menu" id="0">Таблица 1</a></li>
+</ul>  -->
+<div id="contextMenu" class="blueish-border col-sm-3 dropdown-menu" role="menu" style="display:none" >
+	<ul class="col-sm-12">
+    	<li><a tabindex="-1" class="close" id="close-context">&times;</a></li>
+        <br />
+    </ul>
+    <div class="col-sm-12">
+        <h4>TC </h4>
+        <ul id="device-list-in-view" class="list-group ctx-menu checked-list-box">
+        </ul>
+        <br />
+	</div>
+
+    <div class="col-sm-6">
+    	<button class="btn btn-primary col-xs-12" id="get-checked-data">применять</button>
+    </div>
+
+
+	 </div>
+	 </div>
+     <div id='overtopper' class="hidden"></div>
+ </div>
+ <footer >
+        <div class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container" style="background-color:#0b0d0f">
+              <ul class="nav navbar-nav">
+                    <li><a class="task-bar overlay" id="task-entry-calendar">календарь</a></li>
+                    <li><a class="task-bar overlay" id="task-entry-view-options"> тс </a></li>
+                    <li><a class="task-bar overlay" id="view-graph">график</a></li>
+                    <!-- <li><a class="task-bar overlay" id="map-view">карта</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+
+<script type="text/javascript" src="libs/jquery.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap.min.js"></script>
+<script type="text/javascript" src="libs/raphael-2.1.4.min.js"></script>
+<script type="text/javascript" src="libs/morris.min.js"></script>
+
+
+<script src="libs/bootstrap-table.min.js"></script>
+<script src="libs/bootstrap-datepicker.min.js"></script>
+<script src="libs/bootstrap-datepicker.ru.min.js"></script>
+<script src="libs/bootstrap-timepicker.min.js"></script>
+<script type="text/javascript" src="js/tableExport.js"></script>
+<script type="text/javascript" src="libs/export.js"></script>
+
+<script src="libs/bootstrap-table-toolbar.min.js"></script>
+<script src="js/table-locale.js"></script>
+
+<script src="libs/functions.js"></script>
+<script type="text/javascript" src="libs/app.js"></script>
+<script type="text/javascript" src="js/bi.js"></script>
+</body>
+</html>
