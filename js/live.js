@@ -26,7 +26,7 @@ $(function() {
         $(".live-dates").html(datesHtml);
     })
     getLiveDates.fail(function(e){
-        console.log("error occured getiing dates")
+        return;
     })
 
     let regime = window.location.hash;
@@ -71,7 +71,7 @@ $(function() {
         }          
     })
     getInstances.fail(function(e){
-        exceptionHandler(e);
+        $(".container-x").connectionError();
     });
     
 
@@ -109,7 +109,7 @@ $(function() {
             });
         })
         getStoreData.fail(function(e){
-            console.log(e);
+            $(".container-x").connectionError("<div class='card alert-warning'>an error occured fetching this statistic combination. The server however seems to be up. Try another combination, if it fails you might need to consult the administrator</a>");
         })
     }
 });

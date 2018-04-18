@@ -212,4 +212,10 @@ a.filter-stat.active{
 
 .form-control, .btn, .card{
   border-radius: 0px;
+  outline: none;
 }
+/*.form-control:focus {
+  color: #495057;
+  border-color: transparent;
+  outline: none;
+}*/

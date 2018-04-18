@@ -101,3 +101,18 @@ function errorBox(){
 		
 		gui.Window.get().show();
 })(jQuery, window);
+
+jQuery.fn.extend({
+	connectionError : function(){
+		var html = "";		
+		if(arguments[0])
+			html += arguments[0];
+		else{
+			html = "<a href='settings.html' class='card p-3'>";
+			html += "A connection error occured, check if the REST settings are correctly configured or if the server is up";
+			html += "</a>"
+		}			
+		//exceptionHandler(e);
+		this.html(html);
+	}
+})

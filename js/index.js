@@ -22,7 +22,7 @@ $(function() {
       $(".live-dates").html(datesHtml);
   })
   getLiveDates.fail(function(e){
-      console.log("error occured getiing dates")
+    return;
   })
 
   let getInstances = $.get(restAPI+"/instances");
@@ -43,13 +43,7 @@ $(function() {
     $(".main-view").html(html);
   })
   getInstances.fail(function(e){
-    var html = "";
-    html = "<a href='settings.html' class='card p-3'>";
-    html += "A connection error occured, check to see if the REST settings server is up";
-    html += "</a>"
-    //errorBox(html);
-    exceptionHandler(e);
-    $(".main-view").html(html);
+    $(".main-view").connectionError();
   });
   
 });

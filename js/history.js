@@ -37,7 +37,7 @@ $(function(){
         loadView()
     });
     getHistoryTopics.fail(function(e){
-        console.log(e);
+        $(".container-x").connectionError();
     });
     function loadView(){
         let store = (arguments[0])? arguments[0] : $(".historical-topics > a.filter-stat.active").attr("id");
@@ -51,7 +51,6 @@ $(function(){
             queryUrl += startdate + "/" + enddate;        
         
         chartDiv(store,queryUrl);
-        console.log(queryUrl);
     }
 
     function chartDiv(){
@@ -83,24 +82,43 @@ $(function(){
             }); 
         })
         getStoreData.fail(function(e){
-            console.log(e);
+            $(".container-x").connectionError("<div class='card alert-warning'>an error occured fetching this statistic combination. The server however seems to be up. Try another combination, if it fails you might need to consult the administrator</div>");
         })
         
     }
 
 
     //configure datepickers 
+    var dateErrorTimeout;
     $('[data-toggle="datepicker"]').datepicker({
         format:"yyyy-mm-dd",
-        autoPick : true
+        autoPick : true,
     }).on('pick.datepicker', function (e) {
         if(($(e.currentTarget).attr("id") == "enddate"
             && e.date < $("#startdate").datepicker('getDate')) 
-        || e.date > new Date()
-        || ($(e.currentTarget).attr("id") == "startdate"
-            && e.date > $("#enddate").datepicker('getDate'))){
-                e.preventDefault();
-            }
+        || e.date > new Date()){
+            e.preventDefault();
+            handleDateError("end date can only be a date later than the selected start date but not later than current date");
+            return;                      
+        }
+        if ($(e.currentTarget).attr("id") == "startdate"
+        && e.date > $("#enddate").datepicker('getDate')){
+            e.preventDefault();
+            handleDateError("start date can only be a date earlier than current and the selected end date");   
+            return;  
+        }
 
-      });
+        loadView()
+        function handleDateError(msg){
+            if(dateErrorTimeout)
+            clearTimeout(dateErrorTimeout);
+            $(".dates-helpful-info").addClass("hidden")
+            $(".date-error").html(msg).removeClass("hidden");
+            dateErrorTimeout = setTimeout(function(){
+                $(".date-error").html("").addClass("hidden");
+                $(".dates-helpful-info").removeClass("hidden")
+            },3000);
+            
+        }
+    });
 })

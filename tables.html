@@ -91,6 +91,24 @@
                         <h4 class="col-12 p-0">Tabular Reports</h4>
                         <div class="col-12">
                             Coming soon:Tabulated reports
+                            <div class="col-sm-12 view-table overlay hidden"> <!--hidden">-->
+                                <div class="card no-padding">
+                                  <div id="toolbar">
+                                    <select class="borderless">
+                                      <option value="">export</option>
+                                      <option value="all">export all</option>
+                                    </select>
+                                    </div>
+            
+                                    <table id="table" >
+                                    </table>
+                                    <div id="tableview">
+                                    <select class="borderless" id="choose-table-view">
+                                     </select>
+                                    </div>
+            
+                                 </div>
+                           </div>
                             <!--<button class="btn btn-trans-info button-show-live-dates" >
                                 <i class="fa fa-info"></i>
                             </button>-->
@@ -115,9 +133,6 @@
         <script type="text/javascript" src="libs/jquery.min.js"></script>
         <script type="text/javascript" src="libs/popper.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap.min.js"></script>
-        <script type="text/javascript" src="libs/jquery.flot.js"></script>
-        <script type="text/javascript" src="libs/jquery.flot.categories.js"></script>
-        <script type="text/javascript" src="js/charts.js"></script>
         <script type="text/javascript" src="libs/functions.js"></script>
         <script type="text/javascript" src="libs/app.js"></script>
     </body>
